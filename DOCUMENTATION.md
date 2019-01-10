@@ -1,4 +1,4 @@
-Fálj feltöltést a kezelő abstract osztály dokumentációja
+A Fálj feltöltést kezelő abstract osztály dokumentációja:
 
 /**
  * Handler class which performs various methods during a file upload process.
