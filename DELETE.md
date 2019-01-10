@@ -8,6 +8,8 @@ Az **ImageUploadHandler** összes metódusát
 
 Az **application.properties** fájlban csak a upload url-re vonatkozó property maradjon
 
+A **.gitignore** fájlt
+
 A **SignTest** fájlból a teszt metódust és az SignService-t (a fájlok aláírási kellenek belőle csak)
 
 Rendezd a JAVA importokat, mert ezek után lesz sok feleslegesn importálva.
