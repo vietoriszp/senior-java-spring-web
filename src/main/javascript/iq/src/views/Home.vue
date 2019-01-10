@@ -3,7 +3,7 @@
   <div class="home">
     <vue-single-upload class="file-upload" :show-details="showDetails"
                        @file-selected="fileDescriptor => fileSelected(fileDescriptor)" ref="singleUpload" @finished="onUploadFinished()"
-                       :readonly="false" :compact="false" :base-url="'http://localhost:8080/api/ui/upload'">
+                       :readonly="false" :compact="false" :base-url="'/api/ui/upload'">
       <div slot="details" :class="{'uploader-show-thumbnail' : uploadResult}" v-if="uploadResult">
         <div class="uploader-thumbnail-container" v-if="thumbnailUrl">
         

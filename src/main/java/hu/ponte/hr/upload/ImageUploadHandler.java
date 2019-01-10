@@ -33,7 +33,6 @@ public class ImageUploadHandler extends AbstractBinaryFileUploadHandler
 	@Override
 	public void onDone(UploadContext context)
 	{
-
 		imageStore.save(context.getFileType(), context.getTotal(), context.getFilePath(), context.getFileName());
 
 		super.onDone(context);

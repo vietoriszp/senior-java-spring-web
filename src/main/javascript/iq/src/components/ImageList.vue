@@ -15,7 +15,7 @@
       <tbody>
       <tr v-for="image in images">
         <th scope="row">
-          <img :src="'http://localhost:8080/api/images/preview/' + image.id" :alt="image.name" height="50px">
+          <img :src="'/api/images/preview/' + image.id" :alt="image.name" height="50px">
         </th>
         <td>{{image.id}}</td>
         <td>{{image.name}}</td>
@@ -68,7 +68,7 @@
 	  }
 		
 		private async loadData():Promise<ImageMeta[]> {
-	  	return await this.httpService.get("http://localhost:8080/api/images/meta")
+	  	return await this.httpService.get("/api/images/meta")
     }
 
 	  public beforeDestroy() {

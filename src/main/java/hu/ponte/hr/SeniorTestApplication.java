@@ -11,14 +11,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
-@SpringBootApplication
-@ComponentScan(basePackages = { "hu.ponte.hr" })
-@EnableAutoConfiguration(exclude = {
-	MultipartAutoConfiguration.class,
+@SpringBootApplication(scanBasePackages = "hu.ponte.hr", exclude = {
+	MultipartAutoConfiguration.class
 })
 public class SeniorTestApplication
 {
-
 	public static void main(String[] args)
 	{
 		SpringApplication.run(SeniorTestApplication.class, args);

@@ -38,14 +38,12 @@ public class SignTest
 	@Test
 	public void test_01() throws IOException
 	{
-
 		for (Map.Entry<String, String> image : files.entrySet())
 		{
 			String sign = signService.sign(loadTestImageFile(image.getKey()));
 
 			Assert.assertEquals(sign, image.getValue());
 		}
-
 	}
 
 	private InputStream loadTestImageFile(String imageName) throws IOException
