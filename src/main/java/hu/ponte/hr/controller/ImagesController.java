@@ -26,7 +26,7 @@ public class ImagesController
 	private ImageStore imageStore;
 
 	@GetMapping("meta")
-	public List<ImageMeta> HelloWord()
+	public List<ImageMeta> listImages()
 	{
 		return imageStore.findAll()
 			.stream()
@@ -41,7 +41,7 @@ public class ImagesController
 	}
 
 	@GetMapping("preview/{id}")
-	public void HelloWord(@PathVariable("id") String id, HttpServletResponse response) throws IOException
+	public void getImage(@PathVariable("id") String id, HttpServletResponse response) throws IOException
 	{
 		ImageEntity imageEntity = imageStore.get(id);
 
