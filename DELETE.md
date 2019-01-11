@@ -16,4 +16,6 @@ Rendezd a JAVA importokat, mert ezek után lesz sok feleslegesn importálva.
 
 Próbált ki, hogy az app elindul e
 
+Ha intellij van használva, akkor töröld a local history-t is! Legegyszerűbb ha a home mappában lévő .ideaXX mappát törlöd.
+
 **Ezt a fájlt is töröld**
