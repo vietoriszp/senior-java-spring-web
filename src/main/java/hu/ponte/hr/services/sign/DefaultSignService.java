@@ -25,10 +25,10 @@ import java.util.Base64;
 public class DefaultSignService implements SignService
 {
 	@Value("${sign.service.private.key}")
-	private Path privKeyPath;
+	private String privKeyPath;
 
 	@Value("${sign.service.public.key}")
-	private Path publicKeyPath;
+	private String publicKeyPath;
 
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -56,12 +56,12 @@ public class DefaultSignService implements SignService
 	@PostConstruct
 	private void init() throws Exception
 	{
-		try (InputStream in = applicationContext.getResource("classpath:" + privKeyPath).getInputStream())
+		try (InputStream in = applicationContext.getResource(privKeyPath).getInputStream())
 		{
 			this.privKeyBytes = IOUtils.toByteArray(in);
 		}
 
-		try (InputStream in = applicationContext.getResource("classpath:" + publicKeyPath).getInputStream())
+		try (InputStream in = applicationContext.getResource(publicKeyPath).getInputStream())
 		{
 			this.pubKeyBytes = IOUtils.toByteArray(in);
 		}
