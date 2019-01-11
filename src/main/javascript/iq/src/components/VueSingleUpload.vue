@@ -127,7 +127,7 @@
 			return this.upload.startUpload()
 					.then((result) => {
 						this.screen = 'details';
-						if (result.name != null) {
+						if (result && result.name != null) {
 							this.fileName = result.name;
 						}
 						this.$emit(FINISHED);
