@@ -31,18 +31,18 @@
 </template>
 
 <script lang="ts">
-  import { Component, Prop, Vue } from 'vue-property-decorator';
-  import {FetchHttpService, HttpService} from "@/services/http-service";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+  import {FetchHttpService, HttpService} from '@/services/http-service';
 
   export interface ImageMeta {
-	  id:string;
-	  name:string;
-	  mimeType:string;
-	  size:number;
-	  digitalSign:string;
+	  id: string;
+	  name: string;
+	  mimeType: string;
+	  size: number;
+	  digitalSign: string;
   }
 
-	@Component
+	 @Component
 	export default class ImageList extends Vue {
 		
 	  private httpService: HttpService;
@@ -54,28 +54,27 @@
 		  this.httpService = new FetchHttpService();
 	  }
 
-	  protected async mounted() {
-        this.refresh();
-		}
-
 	  public async refresh() {
 	    const images = await this.loadData();
-	    images.sort(function(a:ImageMeta, b:ImageMeta) {
+	    images.sort(function(a: ImageMeta, b: ImageMeta) {
 		    return a.id.localeCompare(b.id);
 	    });
 
 	    this.images = images;
 	  }
-		
-		private async loadData():Promise<ImageMeta[]> {
-	  	return await this.httpService.get("/api/images/meta")
-    }
 
 	  public beforeDestroy() {
         this.images = [];
 		}
-	}
 
+	  protected async mounted() {
+        this.refresh();
+		}
+		
+		private async loadData(): Promise<ImageMeta[]> {
+	  	return await this.httpService.get('/api/images/meta');
+    }
+	}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -43,3 +43,6 @@ yarn-debug.log*
 *.njsproj
 *.sln
 *.sw*
+
+/src/main/javascript/iq/node/
+/src/main/javascript/iq/node_modules/

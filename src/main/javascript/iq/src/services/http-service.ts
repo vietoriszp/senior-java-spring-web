@@ -1,10 +1,10 @@
-import {CustomError} from "@/services/errors";
+import {CustomError} from '@/services/errors';
 
 export interface IqAppErrorErrorResponse<T> {
-	type: "internal_server_error" | string;
+	type: 'internal_server_error' | string;
 	key?: string;
 	params?: {
-		[key: string]: string
+		[key: string]: string,
 	};
 	data?: T;
 }
@@ -23,33 +23,33 @@ export interface HttpService {
 
 export class UnknownServerError extends CustomError {
 	constructor() {
-		super("Unknown Error");
+		super('Unknown Error');
 	}
 }
 
 export class NetworkError extends CustomError {
 	constructor() {
-		super("Network Error");
+		super('Network Error');
 	}
 }
 
 export class NotFoundError extends CustomError {
 	constructor() {
-		super("Not Found");
+		super('Not Found');
 	}
 }
 
 export class InternalServerError extends CustomError {
 	constructor() {
-		super("Internal Server Error");
+		super('Internal Server Error');
 	}
 }
 
 export class IqAppError<T> extends CustomError implements IqAppErrorErrorResponse<T> {
-	readonly type: string;
-	readonly key?: string;
-	readonly params?: { [key: string]: string; };
-	readonly data?: T;
+	public readonly type: string;
+	public readonly key?: string;
+	public readonly params?: { [key: string]: string; };
+	public readonly data?: T;
 
 	constructor(serverResponse: Response, errorResponse: IqAppErrorErrorResponse<T>) {
 		super(serverResponse.statusText);
@@ -63,57 +63,57 @@ export class IqAppError<T> extends CustomError implements IqAppErrorErrorRespons
 export class FetchHttpService implements HttpService {
 
 	public async get(path: string) {
-		return this.doRequest("GET", path, null);
+		return this.doRequest('GET', path, null);
 	}
 
 	public async post(path: string, body?: any) {
-		return this.doRequest("POST", path, body);
+		return this.doRequest('POST', path, body);
 	}
 
 	public async put(path: string, body?: any) {
-		return this.doRequest("PUT", path, body);
+		return this.doRequest('PUT', path, body);
 	}
 
 	public async delete(path: string, body?: any) {
-		return this.doRequest("DELETE", path, body);
+		return this.doRequest('DELETE', path, body);
 	}
 
 	public async head(path: string) {
-		return this.doRequest("HEAD", path, null);
+		return this.doRequest('HEAD', path, null);
 	}
 
-	private async doRequest(method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD", path: string, body?: any) {
+	private async doRequest(method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD', path: string, body?: any) {
 		let response;
 		try {
 			response = await fetch(path, this.getRequestInitData(method, body));
 		} catch (e) {
-			throw new NetworkError(); //Csak ha a szerver nem is érhető el (TCP error, protocol error)
+			throw new NetworkError(); // Csak ha a szerver nem is érhető el (TCP error, protocol error)
 		}
 		return this.handleResponse(response);
 	}
 
-	private getRequestInitData(method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD", body?: any): RequestInit {
+	private getRequestInitData(method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD', body?: any): RequestInit {
 		const init: RequestInit = {
-			method: method
+			method,
 		};
 
 		const headers = new Headers();
 
-		headers.set("X-Requested-With", "IqApp");
+		headers.set('X-Requested-With', 'IqApp');
 
 		if (body) {
 			init.body = JSON.stringify(body);
-			headers.set("Content-Type", "application/json");
+			headers.set('Content-Type', 'application/json');
 		}
 
 		init.headers = headers;
-		init.credentials = "same-origin";
+		init.credentials = 'same-origin';
 
 		return init;
 	}
 
 	private async handleResponse(response: Response): Promise<any> {
-		//TODO handle all status codes
+		// TODO handle all status codes
 		if (response.status < 200 || response.status >= 400) {
 			if (response.status === 404) {
 				throw new NotFoundError();
@@ -128,7 +128,7 @@ export class FetchHttpService implements HttpService {
 			}
 
 			if (errorData && errorData.type) {
-				if (errorData.type === "internal_server_error") {
+				if (errorData.type === 'internal_server_error') {
 					throw new InternalServerError();
 				} else {
 					throw new IqAppError(response, errorData);

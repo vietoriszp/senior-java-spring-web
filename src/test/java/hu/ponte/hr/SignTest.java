@@ -1,16 +1,10 @@
 package hu.ponte.hr;
 
-import hu.ponte.hr.services.sign.SignService;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,12 +15,6 @@ import java.util.Map;
 @SpringBootTest()
 public class SignTest
 {
-	@Autowired
-	private SignService signService;
-
-	@Autowired
-	private ApplicationContext applicationContext;
-
 	Map<String, String> files = new LinkedHashMap<String, String>() {
 		{
 			put("cat.jpg","XYZ+wXKNd3Hpnjxy4vIbBQVD7q7i0t0r9tzpmf1KmyZAEUvpfV8AKQlL7us66rvd6eBzFlSaq5HGVZX2DYTxX1C5fJlh3T3QkVn2zKOfPHDWWItdXkrccCHVR5HFrpGuLGk7j7XKORIIM+DwZKqymHYzehRvDpqCGgZ2L1Q6C6wjuV4drdOTHps63XW6RHNsU18wHydqetJT6ovh0a8Zul9yvAyZeE4HW7cPOkFCgll5EZYZz2iH5Sw1NBNhDNwN2KOxrM4BXNUkz9TMeekjqdOyyWvCqVmr5EgssJe7FAwcYEzznZV96LDkiYQdnBTO8jjN25wlnINvPrgx9dN/Xg==");
@@ -36,19 +24,9 @@ public class SignTest
 	};
 
 	@Test
-	public void test_01() throws IOException
-	{
-		for (Map.Entry<String, String> image : files.entrySet())
-		{
-			String sign = signService.sign(loadTestImageFile(image.getKey()));
+	public void test_01() {
 
-			Assert.assertEquals(sign, image.getValue());
-		}
 	}
 
-	private InputStream loadTestImageFile(String imageName) throws IOException
-	{
-		return  applicationContext.getResource("classpath:/images/" + imageName).getInputStream();
-	}
 
 }
