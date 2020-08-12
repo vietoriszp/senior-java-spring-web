@@ -14,9 +14,7 @@ A feladat elvégézéshez biztosított fáljok melyek a projektben megtalálhat�
 	
 Kiegészítések
 =============
- - A fáljfeltöltő szerver oldali osztályának a váza ImageUploadHandler.java fájlban található. 
- - A képek listázásához, szükséges implementálni a klienst kiszolgáló végpontokat. 
- - A feltöltést kezelő osztály dokumentációját a DOCUMENTATION.md tartalmazza
+ - A képek listázásához és fáljfeltöltéshez szükséges implementálni a klienst kiszolgáló végpontokat.
  
 Az alábbi képen egy példát kívánunk mutatni a helyes megoldásra vonatkozólag:
  ![Solution](image/example.png)
