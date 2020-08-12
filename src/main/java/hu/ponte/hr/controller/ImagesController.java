@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
+import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author vpeter
+ */
 @RestController()
 @RequestMapping("api/images")
 public class ImagesController {
@@ -19,13 +23,31 @@ public class ImagesController {
     @Autowired
     private ImageStore imageStore;
 
+    /**
+     * A kép metaadatok szoltálataását végző végpont
+     *
+     * @return A teljes tárolt képekhez tartozó metaadat lista
+     */
     @GetMapping("meta")
     public List<ImageMeta> listImages() {
-		return Collections.emptyList();
+        return imageStore.getAllMetaDatas();
     }
 
+    /**
+     * A kisméretű képek szolháltatását végző végpont
+     *
+     * @param id A paraméterként kapott képazonosító
+     * @see HttpServletResponse
+     */
     @GetMapping("preview/{id}")
     public void getImage(@PathVariable("id") String id, HttpServletResponse response) {
-	}
+        try {
+            ServletOutputStream os = response.getOutputStream();
+            os.write(imageStore.getThumbnailById(Integer.parseInt(id)));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
