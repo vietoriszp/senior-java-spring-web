@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.SignatureException;
@@ -69,9 +71,10 @@ public class SignTest {
      * @see SignatureException
      */
     @Test
-    public void test_Verify() {
+    public void test_Verify() throws IOException {
         InputStream imageStream = SignTest.class.getResourceAsStream("/images/" + CAT);
-        byte[] signedImage = signService.signImage(imageStream);
-        signService.verifyImage(imageStream, signedImage);
+        byte[] originImage = imageStream.readAllBytes();
+        byte[] signedImage = signService.signImage(new ByteArrayInputStream(originImage));
+        Assert.assertTrue(signService.verifyImage(new ByteArrayInputStream(originImage), signedImage));
     }
 }

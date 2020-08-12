@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
@@ -40,7 +41,7 @@ public class SignService {
             signature.initSign(KeyProvider.getPKCS8RSAKey(env.getProperty("PRIVATE_KEY")));
             signature.update(content);
             signatureBytes = Base64.getEncoder().encode(signature.sign());
-            if (!verifyImage(image, signatureBytes))
+            if (!verifyImage(new ByteArrayInputStream(content), signatureBytes))
                 log.error(env.getProperty("VERIFY_ERROR"));
         } catch (NoSuchAlgorithmException e) {
             log.error(env.getProperty("ALGORITHM_ERROR"));
@@ -63,8 +64,8 @@ public class SignService {
      * @return Igaz, ha sikeres a visszaellenőrzés
      */
     public boolean verifyImage(InputStream image, byte[] signatureBytes) {
-        BufferedInputStream bis = new BufferedInputStream(image);
         try {
+            BufferedInputStream bis = new BufferedInputStream(image);
             byte[] content = bis.readAllBytes();
             Signature sign = Signature.getInstance(SHA256_RSA);
             //           sign.initVerify(KeyProvider.getX509RSAKey(provider.getValue("PUBLIC_KEY")));
