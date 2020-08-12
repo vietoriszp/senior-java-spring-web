@@ -1,7 +1,7 @@
 package hu.ponte.hr.controller;
 
 
-import hu.ponte.hr.services.ImageStore;
+import hu.ponte.hr.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +21,7 @@ import java.util.List;
 public class ImagesController {
 
     @Autowired
-    private ImageStore imageStore;
+    private ImageService imageService;
 
     /**
      * A kép metaadatok szoltálataását végző végpont
@@ -30,7 +30,7 @@ public class ImagesController {
      */
     @GetMapping("meta")
     public List<ImageMeta> listImages() {
-        return imageStore.getAllMetaDatas();
+        return imageService.getAllMetaDatas();
     }
 
     /**
@@ -43,7 +43,7 @@ public class ImagesController {
     public void getImage(@PathVariable("id") String id, HttpServletResponse response) {
         try {
             ServletOutputStream os = response.getOutputStream();
-            os.write(imageStore.getThumbnailById(Integer.parseInt(id)));
+            os.write(imageService.getThumbnailById(Integer.parseInt(id)));
 
         } catch (IOException e) {
             e.printStackTrace();
