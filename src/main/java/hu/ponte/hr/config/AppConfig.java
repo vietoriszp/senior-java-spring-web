@@ -21,8 +21,6 @@ import java.util.Locale;
  */
 @Configuration
 public class AppConfig {
-    @Autowired
-    private Environment env;
 
     @Bean
     public LocaleResolver localeResolver() {
@@ -39,24 +37,6 @@ public class AppConfig {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(2097152);
         return multipartResolver;
-    }
-
-    /**
-     * Maximális fájlméret túllépésének kezelése.
-     */
-    @ControllerAdvice
-    public class FileUploadExceptionAdvice {
-
-        @ExceptionHandler(MaxUploadSizeExceededException.class)
-        public ModelAndView handleMaxSizeException(
-                MaxUploadSizeExceededException exc,
-                HttpServletRequest request,
-                HttpServletResponse response) {
-
-            ModelAndView modelAndView = new ModelAndView("file");
-            modelAndView.getModel().put("dz-message", String.format(env.getProperty("FILE_SIZE_ERROR"), 2));
-            return modelAndView;
-        }
     }
 
 }
