@@ -66,4 +66,5 @@ public class UploadController {
         InputStream is = file.getInputStream();
         return is.readAllBytes();
     }
+
 }
